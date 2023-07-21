@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.Main_Container {
+  background-color: #171717;
+  color: white;
+  padding: 2rem;
+  width: 40%;
+  margin: 4rem auto;
+  border-radius: 10px;
+}
+.Weather__HeaderPart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+input {
+  border: none;
+  background-color: #1e1e1e;
+  outline: none;
+  color: white;
+  padding: 0.5rem 2.5rem;
+  border-radius: 5px;
+}
+input ::placeholder {
+  color: white;
+}
+.Weather__SearchPart {
+  position: relative;
+}
+.Weather__SearchPart i {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 15px;
+  color: white;
+}
+.Weather__Units {
+  font-size: 1.5rem;
+}
+.Weather__Units span {
+  cursor: pointer;
+}
+.Weather__Units span:first-child {
+  margin-right: 0.5rem;
+}
+.Weather__Body {
+  text-align: center;
+  margin-top: 3rem;
+}
+.Weather__DateTime {
+  margin-bottom: 2rem;
+  font-size: 14px;
+}
+.Weather__Forecast {
+  background-color: #1e1e1e;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+}
+.Weather__Icon img {
+  width: 100px;
+}
+.Weather__Temp {
+  font-size: 1.75rem;
+}
+.Weather__MinMax {
+  display: flex;
+  justify-content: center;
+}
+.Weather__MinMax p {
+  font-size: 14px;
+  margin: 0.5rem;
+}
+.Weather__Information {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+  margin-top: 3rem;
+}
+.Weather__Card {
+  display: flex;
+  align-items: center;
+  background-color: #1e1e1e;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.Weather__Card i {
+  font-size: 1.5rem;
+  margin-right: 1.2rem;
+}
+.Weather__Card p {
+  font-size: 14px;
+}
+
+/* For the Responsiveness of the app*/
+@media (max-width: 936px) {
+  .Main_Container {
+    width: 90%;
+  }
+  .Weather__HeaderPart {
+    flex-direction: column;
+  }
+  .Weather__Units {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .Weather__Information {
+    grid-template-columns: none;
+  }
+}

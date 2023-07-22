@@ -5,46 +5,72 @@ let units = "metric";
 // Selectors
 let city = document.querySelector(".Weather__City");
 let dateTime = document.querySelector(".Weather__DateTime");
+let weather = document.querySelector(".Weather__Forecast");
+let weatherIcon = document.querySelector(".Weather__Icon");
+let weatherTemperature = document.querySelector(".Weather__Temp");
+let weatherMinMax = document.querySelector(".Weather__MinMax");
+let weatherFeels = document.querySelector(".Weather__RealFeel");
+let weatherHumidity = document.querySelector(".Weather__Humidity");
+let weatherWind = document.querySelector(".Weather__Wind");
+let weatherPressure = document.querySelector(".Weather__Pressure");
+
+// search
+document
+  .querySelector(".Weather__SearchPart")
+  .addEventListener("submit", (e) => {
+    let search = document.querySelector(".Weather__SearchForm").value;
+
+    //Preventing the page default action
+    e.preventDefault();
+
+    //Changing the currentCity to the value that is type in the search bar
+    currentCity = search;
+
+    getWeather();
+  });
+
+// units
+document
+  .querySelector(".Weather__Unit_Celcius")
+  .addEventListener("click", () => {
+    if (units !== "metric") {
+      // change to metric
+      units = "metric";
+      // get weather forecast
+      getWeather();
+    }
+  });
+
+document
+  .querySelector(".Weather__Unit_Fahrenheit")
+  .addEventListener("click", () => {
+    if (units !== "imperial") {
+      // change to imperial
+      units = "imperial";
+      // get weather forecast
+      getWeather();
+    }
+  });
 
 //Making a function to convert the timestamp
-function convertTimestamp(timestamp) {
-  let date = new Date(timestamp * 1000);
-  let hours = date.getHours();
-  if (hours < 10) {
-    hours = `0${hours}`;
-  }
-  let minutes = date.getMinutes();
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  let Month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  let dateNumber = date.getDay();
-  let day = days[date.getDay()];
-  let month = Month[date.getMonth()];
-  let year = date.getFullYear();
-  return `${day} ${dateNumber} ${month} ${year}, ${hours}:${minutes}`;
+function convertTimeStamp(timestamp, timezone) {
+  const convertTimezone = timezone / 3600; // convert seconds to hours
+
+  const date = new Date(timestamp * 1000);
+
+  const options = {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    timeZone: `Etc/GMT${convertTimezone >= 0 ? "-" : "+"}${Math.abs(
+      convertTimezone
+    )}`,
+    hour12: true,
+  };
+  return date.toLocaleString("en-US", options);
 }
 
 // Converting country code to full country name
@@ -62,8 +88,16 @@ async function getWeather() {
   const data = await response.json();
   console.log(data);
   city.innerHTML = `${data.name}, ${convertCountryCode(data.sys.country)}`;
-  dateTime.innerHTML = convertTimestamp(data.dt);
+  dateTime.innerHTML = convertTimeStamp(data.dt, data.timezone);
+  weather.innerHTML = `${data.weather[0].description}`;
+  weatherTemperature.innerHTML = `${data.main.temp.toFixed()}&#176`;
+  weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png" alt="" />`;
+  weatherMinMax.innerHTML = `<p>Min: ${data.main.temp_min.toFixed()}&#176</p>  <p>Max: ${data.main.temp_max.toFixed()}&#176</p>`;
+  weatherFeels.innerHTML = `${data.main.feels_like.toFixed()}&#176`;
+  weatherHumidity.innerHTML = `${data.main.humidity}%`;
+  weatherWind.innerHTML = `${data.wind.speed} m/s`;
+  weatherPressure.innerHTML = `${data.main.pressure} hPa`;
 }
 
 // Corrected event listener
-window.addEventListener("load", getWeather());
+window.addEventListener("load", getWeather);

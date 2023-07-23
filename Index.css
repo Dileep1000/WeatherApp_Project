@@ -22,7 +22,7 @@ body {
   align-items: center;
 }
 input {
-  border: none;
+  border: 1px solid white;
   background-color: #1e1e1e;
   outline: none;
   color: white;
@@ -91,6 +91,7 @@ input ::placeholder {
   background-color: #1e1e1e;
   padding: 1rem;
   border-radius: 10px;
+  border: 1px solid white;
 }
 .Weather__Card i {
   font-size: 1.5rem;

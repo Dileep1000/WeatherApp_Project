@@ -14,7 +14,18 @@ let weatherHumidity = document.querySelector(".Weather__Humidity");
 let weatherWind = document.querySelector(".Weather__Wind");
 let weatherPressure = document.querySelector(".Weather__Pressure");
 
-// search
+// search using the magnifying glass button
+document
+  .querySelector(".Weather__SearchButton")
+  .addEventListener("click", (e) => {
+    //Preventing the page default action
+    e.preventDefault();
+    let search = document.querySelector(".Weather__SearchForm").value;
+    currentCity = search;
+    getWeather();
+  });
+
+// search using the input
 document
   .querySelector(".Weather__SearchPart")
   .addEventListener("submit", (e) => {
